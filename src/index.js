@@ -7,7 +7,7 @@ import {BrowserRouter as Router,Routes,Route,Navigate,Link,Outlet,useParams,NavL
 ReactDOM.render(
   <Router>
       <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Index />} />
           <Route path='/myapps' element={<Navigate replace to='/learn'/>} />
          
           <Route path='/learn' element={<Learn />} >
@@ -33,10 +33,10 @@ function CourseId(){
   )
 }
 
-function Home(){
+function Index(){
   return (
     <div>
-      <h1>Home Route</h1>
+      <h1>Index Route</h1>
     </div>
   )
 }
