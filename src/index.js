@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {BrowserRouter as Router,Routes,Route,Navigate,Link,Outlet,useParams,NavLink} from 'react-router-dom'
+import {BrowserRouter as Router,Routes,Route,Navigate,Link,Outlet,useParams,NavLink,useNavigate,useLocation} from 'react-router-dom'
 
 
 ReactDOM.render(
@@ -17,7 +17,7 @@ ReactDOM.render(
                    </Route>
                    <Route path='bundles' element={<Bundles/>} />
           </Route>
-         
+         <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
   </Router>,
   document.getElementById('root')
@@ -26,9 +26,19 @@ ReactDOM.render(
 function CourseId(){
 
   const {id} = useParams();
+  const navigate = useNavigate();
   return(
     <div>
       <h1>{`Your Url is ${id}`}</h1>
+      <button onClick={()=>{
+          navigate("/dashboard",{state: id}); // navigate can take first argument like -1 means 1 page backward but to specify path is better.
+          //second argument is the information that to carry with new page.
+          // it should be state not else.
+          // the same thing can be done with the link itself
+      }} className='btn btn-warning'>Price</button>
+
+      <Link to="/dashboard" state={id}>Test</Link>
+      
     </div>
   )
 }
@@ -61,7 +71,7 @@ function Courses(){
     <div>
       <h1>Courses List</h1>
       <h1>Courses Card</h1>
-      <NavLink style={({isActive})=>{
+      <NavLink style={({isActive})=>{   //is active is default provided
         return{ backgroundColor:isActive?"rebeccapurple":"cyan"}
       }} 
       to={`/learn/courses/${randomCourse}`}>{randomCourse}</NavLink>
@@ -81,3 +91,14 @@ function Bundles(){
     </div>
   )
 }
+
+function Dashboard(){
+    //to use the information that is carring from navigate we need to get help from the location hook.
+    const location = useLocation();
+
+    return (
+      <div>
+        <h1>Info that i got {location.state}</h1>
+      </div>
+    )
+  }
